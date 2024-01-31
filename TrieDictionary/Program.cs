@@ -12,17 +12,23 @@ Trie dictionary = InitializeTrie(words);
 // SearchWord();
 // PrefixAutocomplete();
 // DeleteWord();
-// GetSpellingSuggestions();
+GetSpellingSuggestions();
 
+
+// This method initializes a Trie data structure with a given array of words.
 Trie InitializeTrie(string[] words)
 {
+    // Create a new instance of the Trie class.
     Trie trie = new Trie();
 
+    // Iterate through each word in the input array.
     foreach (string word in words)
     {
+        // Insert the current word into the Trie.
         trie.Insert(word);
     }
 
+    // Return the initialized Trie.
     return trie;
 }
 
@@ -36,12 +42,10 @@ void SearchWord()
         {
             break;
         }
-        /*
         if (input != null && dictionary.Search(input))
         {
             Console.WriteLine($"Found \"{input}\" in dictionary");
         }
-        */
         else
         {
             Console.WriteLine($"Did not find \"{input}\" in dictionary");
@@ -66,14 +70,13 @@ void DeleteWord()
         {
             break;
         }
-        /*
+        
         if (input != null && dictionary.Search(input))
         {
             dictionary.Delete(input);
             Console.WriteLine($"Deleted \"{input}\" from dictionary\n");
             PrintTrie(dictionary);
         }
-        */
         else
         {
             Console.WriteLine($"Did not find \"{input}\" in dictionary");
@@ -198,9 +201,20 @@ void PrintTrie(Trie trie)
 {
     Console.WriteLine("The dictionary contains the following words:");
     List<string> words = trie.GetAllWords();
-    foreach (string word in words)
+    int columnCount = 5;
+    int wordCount = words.Count;
+    int wordsPerColumn = (int)Math.Ceiling((double)wordCount / columnCount);
+
+    for (int i = 0; i < wordsPerColumn; i++)
     {
-        Console.Write($"{word}, ");
+        for (int j = 0; j < columnCount; j++)
+        {
+            int index = i + j * wordsPerColumn;
+            if (index < wordCount)
+            {
+                Console.Write($"{words[index],-15}");
+            }
+        }
+        Console.WriteLine();
     }
-    Console.WriteLine();
 }
